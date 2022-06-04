@@ -1,10 +1,13 @@
 FROM ubuntu:jammy-20220428
 
-RUN useradd --create-home --shell /bin/bash jonathan \
+RUN useradd --create-home --shell /bin/bash --group sudo jonathan \
     && passwd -d jonathan
 
 RUN apt-get update \
     && apt-get install --yes \
+        apt-transport-https \
+        curl \
+        gnupg \
         software-properties-common \
         wget
 
@@ -45,6 +48,28 @@ RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-
     && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-15 15
 RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-14 14 \
     && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-15 15
+
+RUN add-apt-repository ppa:git-core/ppa
+RUN curl --fail --silent --show-error --location https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel.gpg \
+    && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
+RUN apt-get update \
+    && apt-get install --yes \
+        ack \
+        atop \
+        bash-completion \
+        bazel \
+        cmake \
+        fzf \
+        git \
+        htop \
+        ninja-build \
+        python3 \
+        python3-dev \
+        sudo \
+        tmux \
+        tree \
+        vim \
+    && apt-get clean
 
 USER jonathan
 WORKDIR /home/jonathan

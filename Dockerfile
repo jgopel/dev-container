@@ -1,4 +1,4 @@
-FROM ubuntu:jammy-20220428
+FROM ubuntu:jammy
 
 RUN useradd --create-home --shell /bin/bash --group sudo jonathan \
     && passwd -d jonathan

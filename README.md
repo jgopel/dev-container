@@ -10,7 +10,7 @@ systems, platforms, etc.
 From the git root:
 
 ```
-docker run --rm --interactive --tty --entrypoint bash --hostname dev-container $(docker build -q .)
+docker run --rm --interactive --tty --entrypoint bash --hostname dev-container $(docker build -q . --pull)
 ```
 
 To mount a local directory the `--volume` command can be used as such:

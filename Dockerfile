@@ -60,12 +60,17 @@ RUN apt-get update \
         bash-completion \
         bazel \
         cmake \
+        dtrx \
         fzf \
         git \
         htop \
+        man-db \
+        manpages-posix \
+        mlocate \
         ninja-build \
         python3 \
         python3-dev \
+        strace \
         sudo \
         tmux \
         tree \

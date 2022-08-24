@@ -1,4 +1,8 @@
 FROM ubuntu:jammy
+RUN yes | unminimize \
+    && apt-get update \
+    && apt-get upgrade --yes \
+    && apt-get clean
 
 RUN useradd --create-home --shell /bin/bash --group sudo jonathan \
     && passwd -d jonathan

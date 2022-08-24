@@ -4,9 +4,6 @@ RUN yes | unminimize \
     && apt-get upgrade --yes \
     && apt-get clean
 
-RUN useradd --create-home --shell /bin/bash --group sudo jonathan \
-    && passwd -d jonathan
-
 RUN apt-get update \
     && apt-get install --yes \
         apt-transport-https \
@@ -75,5 +72,7 @@ RUN apt-get update \
         vim \
     && apt-get clean
 
+RUN useradd --create-home --shell /bin/bash --group sudo jonathan \
+    && passwd -d jonathan
 USER jonathan
 WORKDIR /home/jonathan

@@ -13,7 +13,8 @@ RUN apt-get update \
         curl \
         gnupg \
         software-properties-common \
-        wget
+        wget \
+    && apt-get clean
 
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update \

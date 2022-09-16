@@ -1,6 +1,9 @@
 FROM ubuntu:jammy
 RUN yes | unminimize \
     && apt-get update \
+    && apt-get install --yes \
+        man-db \
+        manpages-posix \
     && apt-get upgrade --yes \
     && apt-get clean
 
@@ -64,8 +67,6 @@ RUN apt-get update \
         fzf \
         git \
         htop \
-        man-db \
-        manpages-posix \
         mlocate \
         ninja-build \
         python3 \

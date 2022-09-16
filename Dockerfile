@@ -63,6 +63,8 @@ RUN apt-get update \
     && apt-get install --yes \
         bazel \
         cmake \
+        cppcheck \
+        cpplint \
         ninja-build \
         python3 \
         python3-dev \

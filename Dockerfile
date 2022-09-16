@@ -7,6 +7,7 @@ RUN yes | unminimize \
     && apt-get upgrade --yes \
     && apt-get clean
 
+# Compilers
 RUN apt-get update \
     && apt-get install --yes \
         apt-transport-https \
@@ -54,24 +55,30 @@ RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-
 RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-15 15 \
     && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-16 16
 
+# C++ tools
 RUN add-apt-repository ppa:git-core/ppa
 RUN curl --fail --silent --show-error --location https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel.gpg \
     && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
 RUN apt-get update \
     && apt-get install --yes \
+        bazel \
+        cmake \
+        ninja-build \
+        python3 \
+        python3-dev \
+    && apt-get clean
+
+# Developer tools
+RUN apt-get update \
+    && apt-get install --yes \
         ack \
         atop \
         bash-completion \
-        bazel \
-        cmake \
         dtrx \
         fzf \
         git \
         htop \
         mlocate \
-        ninja-build \
-        python3 \
-        python3-dev \
         strace \
         sudo \
         tmux \

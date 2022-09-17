@@ -43,19 +43,19 @@ RUN apt-get update \
         clangd-16 \
     && apt-get clean
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 15 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-16 16
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-16 1
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 15 \
-    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-16 16
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-16 1
 RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-15 15 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-16 16
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-16 1
 RUN update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-15 15 \
-    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-16 16
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-16 1
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-15 15 \
-    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 16
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 1
 RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-15 15 \
-    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-16 16
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-16 1
 RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-15 15 \
-    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-16 16
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-16 1
 
 # C++ tools
 RUN add-apt-repository ppa:git-core/ppa

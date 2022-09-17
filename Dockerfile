@@ -23,7 +23,8 @@ RUN apt-get update \
         g++-11 \
         g++-12 \
         gcc-11 \
-        gcc-12
+        gcc-12 \
+    && apt-get clean
 
 RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
     && apt-add-repository 'deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-15 main' \
@@ -39,7 +40,8 @@ RUN apt-get update \
         clang-tools-15 \
         clang-tools-16 \
         clangd-15 \
-        clangd-16
+        clangd-16 \
+    && apt-get clean
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 15 \
     && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-16 16
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 15 \

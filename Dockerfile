@@ -57,6 +57,16 @@ RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-
 RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-15 15 \
     && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-16 1
 
+# Python tools
+RUN apt-get update \
+    && apt-get install --yes \
+        python3 \
+        python3-dev \
+    && apt-get clean
+ENV POETRY_HOME /opt/poetry
+RUN curl --silent --show-error --location https://install.python-poetry.org | python3 -
+RUN update-alternatives --install /usr/local/bin/poetry poetry /opt/poetry/bin/poetry 20
+
 # C++ tools
 RUN add-apt-repository ppa:git-core/ppa
 RUN curl --fail --silent --show-error --location https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel.gpg \
@@ -68,8 +78,6 @@ RUN apt-get update \
         cppcheck \
         cpplint \
         ninja-build \
-        python3 \
-        python3-dev \
     && apt-get clean
 
 # Developer tools

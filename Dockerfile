@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:kinetic
 RUN yes | unminimize \
     && apt-get update \
     && apt-get install --yes \
@@ -27,19 +27,25 @@ RUN apt-get update \
     && apt-get clean
 
 RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
-    && apt-add-repository 'deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-15 main' \
-    && apt-add-repository 'deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy main'
+    && apt-add-repository 'deb http://apt.llvm.org/kinetic/ llvm-toolchain-kinetic-14 main' \
+    && apt-add-repository 'deb http://apt.llvm.org/kinetic/ llvm-toolchain-kinetic-15 main' \
+    && apt-add-repository 'deb http://apt.llvm.org/kinetic/ llvm-toolchain-kinetic main'
 RUN apt-get update \
     && apt-get install --yes \
+        clang-14 \
+        clang-format-14 \
+        clang-tidy-14 \
+        clang-tools-14 \
+        clangd-14 \
         clang-15 \
-        clang-16 \
         clang-format-15 \
-        clang-format-16 \
         clang-tidy-15 \
-        clang-tidy-16 \
         clang-tools-15 \
-        clang-tools-16 \
         clangd-15 \
+        clang-16 \
+        clang-format-16 \
+        clang-tidy-16 \
+        clang-tools-16 \
         clangd-16 \
     && apt-get clean
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 15 \
@@ -91,6 +97,7 @@ RUN apt-get update \
         git \
         htop \
         mlocate \
+        rsync \
         strace \
         sudo \
         tmux \

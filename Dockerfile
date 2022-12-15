@@ -90,6 +90,7 @@ RUN apt-get update \
         cmake \
         cppcheck \
         cpplint \
+        iwyu \
         ninja-build \
     && apt-get clean
 

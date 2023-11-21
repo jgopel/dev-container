@@ -1,4 +1,5 @@
-FROM ubuntu:kinetic
+FROM ubuntu:mantic
+
 RUN yes | unminimize \
     && apt-get update \
     && apt-get install --yes \
@@ -20,55 +21,55 @@ RUN apt-get update \
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update \
     && apt-get install --yes \
-        g++-11 \
-        g++-12 \
-        gcc-11 \
-        gcc-12 \
+        g++-13 \
+        g++-14 \
+        gcc-13 \
+        gcc-14 \
     && apt-get clean
 
 RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
-    && apt-add-repository 'deb http://apt.llvm.org/kinetic/ llvm-toolchain-kinetic-14 main' \
-    && apt-add-repository 'deb http://apt.llvm.org/kinetic/ llvm-toolchain-kinetic-15 main' \
-    && apt-add-repository 'deb http://apt.llvm.org/kinetic/ llvm-toolchain-kinetic main'
+    && apt-add-repository 'deb http://apt.llvm.org/mantic/ llvm-toolchain-mantic-16 main' \
+    && apt-add-repository 'deb http://apt.llvm.org/mantic/ llvm-toolchain-mantic-17 main' \
+    && apt-add-repository 'deb http://apt.llvm.org/mantic/ llvm-toolchain-mantic main'
 RUN apt-get update \
     && apt-get install --yes \
-        clang-14 \
-        clang-format-14 \
-        clang-tidy-14 \
-        clang-tools-14 \
-        clangd-14 \
-        clang-15 \
-        clang-format-15 \
-        clang-tidy-15 \
-        clang-tools-15 \
-        clangd-15 \
+        clang-16 \
+        clang-format-16 \
+        clang-tidy-16 \
+        clang-tools-16 \
+        clangd-16 \
         clang-17 \
         clang-format-17 \
         clang-tidy-17 \
         clang-tools-17 \
         clangd-17 \
+        clang-18 \
+        clang-format-18 \
+        clang-tidy-18 \
+        clang-tools-18 \
+        clangd-18 \
     && apt-get clean
-RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-14 14 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 15 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-17 1
-RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-14 14 \
-    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 15 \
-    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-17 1
-RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-14 14 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-15 15 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-17 1
-RUN update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-14 14 \
-    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-15 15 \
-    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-17 1
-RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-14 14 \
-    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-15 15 \
-    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-17 1
-RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-14 14 \
-    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-15 15 \
-    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-17 1
-RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-14 14 \
-    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-15 15 \
-    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-17 1
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-16 16 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-17 17 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 1
+RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-16 16 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-17 17 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 1
+RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-16 16 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-17 17 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 1
+RUN update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-16 16 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-17 17 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-18 1
+RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 16 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-17 17 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-18 1
+RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-16 16 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-17 17 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 1
+RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-16 16 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-17 17 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-18 1
 
 # Python tools
 RUN apt-get update \
@@ -104,7 +105,7 @@ RUN apt-get update \
         fzf \
         git \
         htop \
-        mlocate \
+        plocate \
         rsync \
         strace \
         sudo \

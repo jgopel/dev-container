@@ -1,4 +1,4 @@
-FROM ubuntu:mantic
+FROM ubuntu:noble
 
 RUN yes | unminimize \
     && apt-get update \
@@ -21,8 +21,10 @@ RUN apt-get update \
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update \
     && apt-get install --yes \
+        g++-12 \
         g++-13 \
         g++-14 \
+        gcc-12 \
         gcc-13 \
         gcc-14 \
     && apt-get clean

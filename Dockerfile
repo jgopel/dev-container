@@ -78,6 +78,7 @@ RUN apt-get update \
     && apt-get install --yes \
         python3 \
         python3-dev \
+        python3-venv \
     && apt-get clean
 ENV POETRY_HOME /opt/poetry
 RUN curl --silent --show-error --location https://install.python-poetry.org | python3 -
@@ -111,6 +112,7 @@ RUN apt-get update \
         rsync \
         strace \
         sudo \
+        time \
         tmux \
         tree \
         vim \

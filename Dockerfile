@@ -53,25 +53,25 @@ RUN apt-get update \
     && apt-get clean
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-16 16 \
     && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-17 17 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 1
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 18
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-16 16 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-17 17 \
-    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 1
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 18
 RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-16 16 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-17 17 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 1
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 18
 RUN update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-16 16 \
     && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-17 17 \
-    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-18 1
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-18 18
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 16 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-17 17 \
-    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-18 1
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-18 18
 RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-16 16 \
     && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-17 17 \
-    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 1
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 18
 RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-16 16 \
     && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-17 17 \
-    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-18 1
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-18 18
 
 # Python tools
 RUN apt-get update \

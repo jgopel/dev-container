@@ -1,0 +1,11 @@
+FROM dev
+
+# Your favorite tools
+RUN apt-get update \
+    && apt-get install --yes \
+        ack \
+        atop \
+        dtrx \
+        jq \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*

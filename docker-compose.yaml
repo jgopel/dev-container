@@ -1,0 +1,55 @@
+services:
+  run:
+    build:
+      context: run/
+      tags: [run]
+    hostname: run-container
+
+  build:
+    depends_on: [run]
+    build:
+      context: build/
+      tags: [build]
+    hostname: build-container
+
+  dev:
+    depends_on: [build]
+    build:
+      context: dev/
+      tags: [dev]
+    hostname: dev-container
+
+    # Options for interactivity
+    stdin_open: true
+    tty: true
+    network_mode: host
+    volumes:
+      - type: bind
+        source: /etc/passwd
+        target: /etc/passwd
+        read_only: true
+      - type: bind
+        source: /etc/shadow
+        target: /etc/shadow
+        read_only: true
+      - type: bind
+        source: /etc/group
+        target: /etc/group
+        read_only: true
+      - type: bind
+        source: /etc/sudoers
+        target: /etc/sudoers
+        read_only: true
+      - type: bind
+        source: /etc/sudoers.d
+        target: /etc/sudoers.d
+        read_only: true
+
+  user:
+    depends_on: [dev]
+    extends: dev
+    build:
+      context: .
+      dockerfile: Dockerfile.user
+      tags: [user]
+    hostname: dev-container

@@ -2,25 +2,19 @@
 
 I work in a number of environments. Keeping a stable set of tools across these
 environments for a consistent build experience is challenging. I created this
-container to manage that and provide all the tools that I regularly use across
-systems, platforms, etc.
+set of containers to manage that and provide all the tools that I regularly use
+across systems, platforms, etc.
 
-## Running
+## Usage
 
-From the git root:
+This repo provides 2 scripts: `start-container.sh` and `attach-to-container.sh`.
+The start script will stand up the container and mount a bunch of different
+directories so that it feels roughly like the system it's starting on in terms
+of access, etc. The attach script will call the start script if the container
+isn't started and then attach to the running container. NOTE: The attach script
+does not halt the container when you exit the container's shell - stopping must
+be done manually.
 
-```
-docker run --rm --interactive --tty --entrypoint bash --hostname dev-container $(docker build -q . --pull)
-```
-
-To mount a local directory the `--volume` command can be used as such:
-`--volume path/to/host/dir:path/to/container/dir`. Typically something like
-`--volume ~:/home/jonathan/` makes sense.
-
-## Performance
-
-When running the container on a Windows host, it is important to map scratch
-directories from inside a WSL instance to get direct access to a native(ish)
-Linux filesystem. Windows directories are NTFS format and have different update
-requirements, so failure to do this will cause IO issues severe enough to
-significantly slow compilation.
+For example, to start the user container, run `./start-container.sh user`. These
+scripts also allow passing through arguments to the docker commands - eg:
+`./start-container user --workdir /tmp`.

@@ -23,7 +23,17 @@ services:
     stdin_open: true
     tty: true
     network_mode: host
+    working_dir: ${HOME}
+    user: ${USER_ID}:${DEFAULT_GROUP_ID}
+    group_add:
+      - ${SUDO_GROUP_ID}
+      - ${DOCKER_GROUP_ID}
+    environment:
+      TERM: ${TERM}
     volumes:
+      - type: bind
+        source: ${HOME}
+        target: /home/${USERNAME}
       - type: bind
         source: /etc/passwd
         target: /etc/passwd
@@ -44,6 +54,9 @@ services:
         source: /etc/sudoers.d
         target: /etc/sudoers.d
         read_only: true
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
 
   user:
     depends_on: [dev]

@@ -1,34 +1,36 @@
 FROM run
 
 # Precursors
-RUN apt-get update \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
     && apt-get install --yes \
         apt-transport-https \
         curl \
         gnupg \
         software-properties-common \
-        wget \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+        wget
 
 # C++
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN apt-get update \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
     && apt-get install --yes \
         g++-12 \
         gcc-12 \
         g++-14 \
         gcc-13 \
         g++-13 \
-        gcc-14 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+        gcc-14
 
 RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
     && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble main' \
     && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main' \
     && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main'
-RUN apt-get update \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
     && apt-get install --yes \
         clang-17 \
         clang-format-17 \
@@ -44,9 +46,7 @@ RUN apt-get update \
         clang-format-19 \
         clang-tidy-19 \
         clang-tools-19 \
-        clangd-19 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+        clangd-19
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-17 17 \
     && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 18 \
     && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 19
@@ -71,15 +71,16 @@ RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /us
 
 RUN curl --fail --silent --show-error --location https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel.gpg \
     && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
-RUN apt-get update \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
     && apt-get install --yes \
         bazel \
         cmake \
         cppcheck \
         cpplint \
         iwyu \
-        ninja-build \
-    && apt-get clean
+        ninja-build
 
 # Rust
 ENV RUSTUP_HOME=/usr/local/rustup \
@@ -93,7 +94,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
 
 # Python
 RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
     && apt-get install --yes \
         python3 \
         python3-dev \
@@ -101,8 +104,9 @@ RUN apt-get update \
         python3.11 \
         python3.11-dev \
         python3.11-venv \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+        python3.10 \
+        python3.10-dev \
+        python3.10-venv
 ENV POETRY_HOME=/usr/local/poetry \
     PATH=/usr/local/poetry/bin:$PATH
 RUN curl --silent --show-error --location https://install.python-poetry.org | python3 - \

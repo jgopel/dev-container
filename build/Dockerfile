@@ -25,9 +25,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
-    && apt-add-repository 'deb http://apt.llvm.org/mantic/ llvm-toolchain-mantic main' \
-    && apt-add-repository 'deb http://apt.llvm.org/mantic/ llvm-toolchain-mantic-18 main' \
-    && apt-add-repository 'deb http://apt.llvm.org/mantic/ llvm-toolchain-mantic-19 main'
+    && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble main' \
+    && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main' \
+    && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main'
 RUN apt-get update \
     && apt-get install --yes \
         clang-17 \

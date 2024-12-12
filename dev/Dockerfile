@@ -7,6 +7,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     && apt-get install --yes \
         unminimize \
     && yes | unminimize \
+    && apt-get remove --yes \
+        postfix
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
     && apt-get install --yes \
         ca-certificates \
         man-db \

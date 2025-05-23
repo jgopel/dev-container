@@ -43,14 +43,14 @@ typing = ["typing-extensions (>=4.12.2) ; python_version < \"3.11\""]
 
 [[package]]
 name = "identify"
-version = "2.6.10"
+version = "2.6.11"
 description = "File identification library for Python"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "identify-2.6.10-py2.py3-none-any.whl", hash = "sha256:5f34248f54136beed1a7ba6a6b5c4b6cf21ff495aac7c359e1ef831ae3b8ab25"},
-    {file = "identify-2.6.10.tar.gz", hash = "sha256:45e92fd704f3da71cc3880036633f48b4b7265fd4de2b57627cb157216eb7eb8"},
+    {file = "identify-2.6.11-py2.py3-none-any.whl", hash = "sha256:63e98071a592f1dc14ab71c0c50644b3e056387aa04cc8c3849f8f0a2d290aea"},
+    {file = "identify-2.6.11.tar.gz", hash = "sha256:7c637280b88b37110c4b7955c055fc93dcad386973fd9023db5d770c3eed878f"},
 ]
 
 [package.extras]

@@ -23,7 +23,7 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/google/yamlfmt
-    rev: v0.17.2
+    rev: v0.20.0
     hooks:
       - id: yamlfmt
   - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
@@ -36,7 +36,7 @@ repos:
           - --no-sort
         exclude: poetry.lock
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.22
+    rev: 1.0.0
     hooks:
       - id: mdformat
         args:

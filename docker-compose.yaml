@@ -3,21 +3,21 @@ services:
     build:
       context: run/
       tags: [run]
-    hostname: run-container
+    hostname: ${HOSTNAME}-run
 
   build:
     depends_on: [run]
     build:
       context: build/
       tags: [build]
-    hostname: build-container
+    hostname: ${HOSTNAME}-build
 
   dev:
     depends_on: [build]
     build:
       context: dev/
       tags: [dev]
-    hostname: dev-container
+    hostname: ${HOSTNAME}-dev
 
     # Options for interactivity
     stdin_open: true
@@ -65,4 +65,4 @@ services:
       context: .
       dockerfile: Dockerfile.user
       tags: [user]
-    hostname: dev-container
+    hostname: ${HOSTNAME}-devu

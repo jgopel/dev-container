@@ -14,6 +14,7 @@ DOCKER_GROUP_ID=$(getent group docker | cut -d: -f3)
 export DOCKER_GROUP_ID
 SUDO_GROUP_ID=$(getent group sudo | cut -d: -f3)
 export SUDO_GROUP_ID
+export HOSTNAME
 
 for service in "run" "build" "dev" "user"; do
     docker compose build "${service}"

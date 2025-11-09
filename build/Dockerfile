@@ -17,57 +17,79 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update \
     && apt-get install --yes \
-        g++-12 \
-        gcc-12 \
-        g++-14 \
         gcc-13 \
-        g++-13 \
-        gcc-14
+        g++-13
+# NOTE: gcc-14 does not seem to be in the ppa for unclear reasons - skipping
+# TODO: gcc-15
+# RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+#     --mount=type=cache,target=/var/lib/apt,sharing=locked \
+#     apt-get update \
+#     && apt-get install --yes \
+#         gcc-15 \
+#         g++-15
 
-RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
-    && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble main' \
-    && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-18 main' \
-    && apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main'
+RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    apt-get update \
+    apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main' \
+    && apt-get update \
     && apt-get install --yes \
-        clang-17 \
-        clang-format-17 \
-        clang-tidy-17 \
-        clang-tools-17 \
-        clangd-17 \
-        clang-18 \
-        clang-format-18 \
-        clang-tidy-18 \
-        clang-tools-18 \
-        clangd-18 \
         clang-19 \
         clang-format-19 \
         clang-tidy-19 \
         clang-tools-19 \
-        clangd-19
-RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-17 17 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 18 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 19
-RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-17 17 \
-    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 18 \
-    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 19
-RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-17 17 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 18 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-19 19
-RUN update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-17 17 \
-    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-18 18 \
-    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-19 19
-RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-17 17 \
-    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-18 18 \
-    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-19 19
-RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-17 17 \
-    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 18 \
-    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-19 19
-RUN update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-17 17 \
-    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-18 18 \
+        clangd-19 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 19 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 19 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-19 19 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-19 19 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-19 19 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-19 19 \
     && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-19 19
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-20 main' \
+    && apt-get update \
+    && apt-get install --yes \
+        clang-20 \
+        clang-format-20 \
+        clang-tidy-20 \
+        clang-tools-20 \
+        clangd-20 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 20 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 20 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 20 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-20 20 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-20 20 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-20 20 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-20 20
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-21 main' \
+    && apt-get update \
+    && apt-get install --yes \
+        clang-21 \
+        clang-format-21 \
+        clang-tidy-21 \
+        clang-tools-21 \
+        clangd-21 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-21 21 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-21 21 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-21 21 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-21 21 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 21 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-21 21 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-21 21
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble main' \
+    && apt-get update \
+    && apt-get install --yes \
+        clang \
+        clang-format \
+        clang-tidy \
+        clang-tools \
+        clangd
 
 RUN curl --fail --silent --show-error --location https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel.gpg \
     && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list

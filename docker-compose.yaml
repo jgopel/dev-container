@@ -1,68 +1,66 @@
+x-interactive-mode: &interactive-mode
+  stdin_open: true
+  tty: true
+  network_mode: host
+  working_dir: ${HOME}
+  user: ${USER_ID}:${DEFAULT_GROUP_ID}
+  group_add:
+    - ${SUDO_GROUP_ID}
+    - ${DOCKER_GROUP_ID}
+  environment:
+    TERM: ${TERM}
+  volumes:
+    - type: bind
+      source: ${HOME}
+      target: /home/${USERNAME}
+    - type: bind
+      source: /etc/passwd
+      target: /etc/passwd
+      read_only: true
+    - type: bind
+      source: /etc/shadow
+      target: /etc/shadow
+      read_only: true
+    - type: bind
+      source: /etc/group
+      target: /etc/group
+      read_only: true
+    - type: bind
+      source: /etc/sudoers
+      target: /etc/sudoers
+      read_only: true
+    - type: bind
+      source: /etc/sudoers.d
+      target: /etc/sudoers.d
+      read_only: true
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+
 services:
   run:
     build:
-      context: run/
-      tags: [run]
+      context: docker/
+      target: run
     hostname: ${HOSTNAME}-run
 
   build:
-    depends_on: [run]
     build:
-      context: build/
-      tags: [build]
+      context: docker/
+      target: build
     hostname: ${HOSTNAME}-build
 
   dev:
-    depends_on: [build]
+    !!merge <<: *interactive-mode
     build:
-      context: dev/
+      context: docker/
+      target: dev
       tags: [dev]
     hostname: ${HOSTNAME}-dev
 
-    # Options for interactivity
-    stdin_open: true
-    tty: true
-    network_mode: host
-    working_dir: ${HOME}
-    user: ${USER_ID}:${DEFAULT_GROUP_ID}
-    group_add:
-      - ${SUDO_GROUP_ID}
-      - ${DOCKER_GROUP_ID}
-    environment:
-      TERM: ${TERM}
-    volumes:
-      - type: bind
-        source: ${HOME}
-        target: /home/${USERNAME}
-      - type: bind
-        source: /etc/passwd
-        target: /etc/passwd
-        read_only: true
-      - type: bind
-        source: /etc/shadow
-        target: /etc/shadow
-        read_only: true
-      - type: bind
-        source: /etc/group
-        target: /etc/group
-        read_only: true
-      - type: bind
-        source: /etc/sudoers
-        target: /etc/sudoers
-        read_only: true
-      - type: bind
-        source: /etc/sudoers.d
-        target: /etc/sudoers.d
-        read_only: true
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-
   user:
-    depends_on: [dev]
-    extends: dev
+    !!merge <<: *interactive-mode
     build:
       context: .
       dockerfile: Dockerfile.user
-      tags: [user]
     hostname: ${HOSTNAME}-devu

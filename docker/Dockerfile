@@ -46,8 +46,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         clang-format-19 \
         clang-tidy-19 \
         clang-tools-19 \
-        clangd-19 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 19 \
+        clangd-19
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 19 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 19 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-19 19 \
     && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-19 19 \
@@ -63,8 +63,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         clang-format-20 \
         clang-tidy-20 \
         clang-tools-20 \
-        clangd-20 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 20 \
+        clangd-20
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 20 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 20 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 20 \
     && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-20 20 \
@@ -80,8 +80,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         clang-format-21 \
         clang-tidy-21 \
         clang-tools-21 \
-        clangd-21 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-21 21 \
+        clangd-21
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-21 21 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-21 21 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-21 21 \
     && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-21 21 \
@@ -93,11 +93,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble main' \
     && apt-get update \
     && apt-get install --yes \
-        clang \
-        clang-format \
-        clang-tidy \
-        clang-tools \
-        clangd
+        clang-22 \
+        clang-format-22 \
+        clang-tidy-22 \
+        clang-tools-22 \
+        clangd-22
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-22 22 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-22 22 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-22 22 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-22 22 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-22 22 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-22 22 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-22 22
 
 RUN curl --fail --silent --show-error --location https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel.gpg \
     && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list

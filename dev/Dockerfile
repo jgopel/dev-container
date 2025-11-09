@@ -55,3 +55,17 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         tmux \
         tree \
         vim
+
+# LLM tools
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    curl -fsSL https://deb.nodesource.com/setup_24.x | bash \
+    && apt-get update \
+    && apt-get install --yes \
+        nodejs \
+    && node --version \
+    && npm --version
+RUN npm install -g @anthropic-ai/claude-code \
+    && claude --version
+RUN npm install -g @google/gemini-cli \
+    && gemini --version

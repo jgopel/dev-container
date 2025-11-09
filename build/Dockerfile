@@ -125,12 +125,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         python3 \
         python3-dev \
         python3-venv \
-        python3.11 \
-        python3.11-dev \
-        python3.11-venv \
-        python3.10 \
-        python3.10-dev \
-        python3.10-venv
+        python3.14 \
+        python3.14-dev \
+        python3.14-venv \
+        python3.13 \
+        python3.13-dev \
+        python3.13-venv
 ENV POETRY_HOME=/usr/local/poetry \
     PATH=/usr/local/poetry/bin:$PATH
 RUN curl --silent --show-error --location https://install.python-poetry.org | python3 - \

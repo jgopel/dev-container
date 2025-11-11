@@ -2,7 +2,7 @@
 # can't figure out another way to achieve this with `docker compose` short of
 # doing this.
 
-FROM ubuntu:noble as run
+FROM ubuntu:noble AS run
 
 RUN userdel --remove ubuntu
 
@@ -26,15 +26,15 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update \
     && apt-get install --yes \
         gcc-13 \
-        g++-13
-# NOTE: gcc-14 does not seem to be in the ppa for unclear reasons - skipping
-# TODO: gcc-15
-# RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-#     --mount=type=cache,target=/var/lib/apt,sharing=locked \
-#     apt-get update \
-#     && apt-get install --yes \
-#         gcc-15 \
-#         g++-15
+        g++-13 \
+        libstdc++-13-dev
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        gcc-14 \
+        g++-14 \
+        libstdc++-14-dev
 
 RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -46,7 +46,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         clang-format-19 \
         clang-tidy-19 \
         clang-tools-19 \
-        clangd-19
+        clangd-19 \
+        libc++-19-dev
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 19 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 19 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-19 19 \
@@ -63,7 +64,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         clang-format-20 \
         clang-tidy-20 \
         clang-tools-20 \
-        clangd-20
+        clangd-20 \
+        libc++-20-dev
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 20 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 20 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 20 \
@@ -80,7 +82,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         clang-format-21 \
         clang-tidy-21 \
         clang-tools-21 \
-        clangd-21
+        clangd-21 \
+        libc++-21-dev
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-21 21 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-21 21 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-21 21 \
@@ -97,7 +100,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         clang-format-22 \
         clang-tidy-22 \
         clang-tools-22 \
-        clangd-22
+        clangd-22 \
+        libc++-22-dev
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-22 22 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-22 22 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-22 22 \
@@ -140,12 +144,15 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         python3 \
         python3-dev \
         python3-venv \
-        python3.14 \
-        python3.14-dev \
-        python3.14-venv \
+        python3.11 \
+        python3.11-dev \
+        python3.11-venv \
         python3.13 \
         python3.13-dev \
-        python3.13-venv
+        python3.13-venv \
+        python3.14 \
+        python3.14-dev \
+        python3.14-venv
 ENV POETRY_HOME=/usr/local/poetry \
     PATH=/usr/local/poetry/bin:$PATH
 RUN curl --silent --show-error --location https://install.python-poetry.org | python3 - \

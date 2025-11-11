@@ -1,0 +1,231 @@
+# NOTE: This file is in its own folder so that its context can be empty. I
+# can't figure out another way to achieve this with `docker compose` short of
+# doing this.
+
+FROM ubuntu:noble AS run
+
+RUN userdel --remove ubuntu
+
+FROM run AS build
+
+# Precursors
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        apt-transport-https \
+        curl \
+        gnupg \
+        software-properties-common \
+        wget
+
+# C++
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        gcc-13 \
+        g++-13 \
+        libstdc++-13-dev
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        gcc-14 \
+        g++-14 \
+        libstdc++-14-dev
+
+RUN wget --output-document=- https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main' \
+    && apt-get update \
+    && apt-get install --yes \
+        clang-19 \
+        clang-format-19 \
+        clang-tidy-19 \
+        clang-tools-19 \
+        clangd-19 \
+        libc++-19-dev
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 19 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 19 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-19 19 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-19 19 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-19 19 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-19 19 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-19 19
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-20 main' \
+    && apt-get update \
+    && apt-get install --yes \
+        clang-20 \
+        clang-format-20 \
+        clang-tidy-20 \
+        clang-tools-20 \
+        clangd-20 \
+        libc++-20-dev
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 20 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 20 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 20 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-20 20 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-20 20 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-20 20 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-20 20
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-21 main' \
+    && apt-get update \
+    && apt-get install --yes \
+        clang-21 \
+        clang-format-21 \
+        clang-tidy-21 \
+        clang-tools-21 \
+        clangd-21 \
+        libc++-21-dev
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-21 21 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-21 21 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-21 21 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-21 21 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 21 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-21 21 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-21 21
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble main' \
+    && apt-get update \
+    && apt-get install --yes \
+        clang-22 \
+        clang-format-22 \
+        clang-tidy-22 \
+        clang-tools-22 \
+        clangd-22 \
+        libc++-22-dev
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-22 22 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-22 22 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-22 22 \
+    && update-alternatives --install /usr/bin/clang-apply-replacements clang-apply-replacements /usr/bin/clang-apply-replacements-22 22 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-22 22 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-22 22 \
+    && update-alternatives --install /usr/bin/git-clang-format git-clang-format /usr/bin/git-clang-format-22 22
+
+RUN curl --fail --silent --show-error --location https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > /etc/apt/trusted.gpg.d/bazel.gpg \
+    && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
+RUN wget --output-document=- https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+    && apt-add-repository "deb https://apt.kitware.com/ubuntu/ $(lsb_release --codename --short) main"
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        bazel \
+        cmake \
+        cppcheck \
+        cpplint \
+        iwyu \
+        ninja-build
+
+# Rust
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+    && chmod -R a+w ${RUSTUP_HOME} ${CARGO_HOME} \
+    && cargo --version \
+    && rustc --version \
+    && rustup --version
+
+# Python
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        python3 \
+        python3-dev \
+        python3-venv \
+        python3.11 \
+        python3.11-dev \
+        python3.11-venv \
+        python3.13 \
+        python3.13-dev \
+        python3.13-venv \
+        python3.14 \
+        python3.14-dev \
+        python3.14-venv
+ENV POETRY_HOME=/usr/local/poetry \
+    PATH=/usr/local/poetry/bin:$PATH
+RUN curl --silent --show-error --location https://install.python-poetry.org | python3 - \
+    && poetry --version
+
+FROM build AS dev
+
+# Make system human-friendly
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        unminimize \
+    && yes | unminimize \
+    && apt-get remove --yes \
+        postfix
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        ca-certificates \
+        man-db \
+        manpages-posix
+
+# Docker
+RUN install -m 0755 -d /etc/apt/keyrings \
+    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
+    && chmod a+r /etc/apt/keyrings/docker.asc \
+    && echo "deb \
+        [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+        https://download.docker.com/linux/ubuntu \
+        $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+    | tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        docker-ce \
+        docker-ce-cli \
+        containerd.io \
+        docker-buildx-plugin \
+        docker-compose-plugin
+
+# Developer tools
+RUN add-apt-repository ppa:git-core/ppa
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install --yes \
+        bash-completion \
+        emacs \
+        fzf \
+        git \
+        htop \
+        plocate \
+        rsync \
+        strace \
+        sudo \
+        time \
+        tmux \
+        tree \
+        vim
+
+# LLM tools
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    curl -fsSL https://deb.nodesource.com/setup_24.x | bash \
+    && apt-get update \
+    && apt-get install --yes \
+        nodejs \
+    && node --version \
+    && npm --version
+RUN npm install -g @anthropic-ai/claude-code \
+    && claude --version
+RUN npm install -g @google/gemini-cli \
+    && gemini --version
